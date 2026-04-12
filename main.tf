@@ -18,7 +18,6 @@ terraform {
 
 # Define local values used in configuration
 locals { 
-    #image = "ghcr.io/csse6400/taskoverflow:latest" 
     database_username = "administrator" 
     database_password = "foobarbaz" # this is bad 
 }
@@ -39,11 +38,6 @@ provider "aws" {
         } 
     } 
 }
-
-
-
-
-
 
 
 
@@ -166,7 +160,7 @@ resource "aws_ecs_task_definition" "taskoverflow" {
     memory = 2048 
     execution_role_arn = data.aws_iam_role.lab.arn 
 
-    # Added this line - wait for image to be pushed
+    # Wait for image to be pushed
     depends_on = [docker_registry_image.taskoverflow]
 
     container_definitions = <<DEFINITION
